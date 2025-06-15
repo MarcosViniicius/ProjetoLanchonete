@@ -1,0 +1,57 @@
+# Arquivos compilados Java
+*.class
+/bin/
+/target/
+/build/
+
+# Arquivos de configuração do IDE
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+nbproject/
+nb-configuration.xml
+
+# Arquivos de configuração do Eclipse
+.settings/
+.classpath
+.project
+
+# Arquivos de configuração do NetBeans
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# Arquivos de log
+*.log
+
+# Arquivos de backup
+*~
+*.bak
+
+# Arquivos de configuração do sistema
+.DS_Store
+Thumbs.db
+
+# Arquivos de configuração local do banco de dados
+*.properties
+*.config
+
+# Arquivos Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+
+# Arquivos Gradle
+.gradle/
+gradle-app.setting
+!gradle-wrapper.jar
+.gradletasknamecache
