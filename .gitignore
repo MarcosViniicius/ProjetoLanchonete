@@ -10,19 +10,20 @@
 *.iml
 *.iws
 *.ipr
-nbproject/
-nb-configuration.xml
 
 # Arquivos de configuração do Eclipse
 .settings/
 .classpath
 .project
 
-# Arquivos de configuração do NetBeans
+# Arquivos do NetBeans
 /nbbuild/
 /dist/
 /nbdist/
 /.nb-gradle/
+# Remova ou comente as linhas abaixo se necessário
+# nbproject/
+# nb-configuration.xml
 
 # Arquivos de log
 *.log
@@ -36,8 +37,9 @@ nb-configuration.xml
 Thumbs.db
 
 # Arquivos de configuração local do banco de dados
-*.properties
-*.config
+# Modifique esta linha para ignorar apenas arquivos específicos
+database.properties
+config.properties
 
 # Arquivos Maven
 target/

@@ -18,7 +18,7 @@ import java.sql.*;
 public class TelaCadastroProduto extends JFrame {
     // Componentes da interface gráfica
     private JTextField txtNome, txtCategoria, txtPreco, txtEstoque;
-    private JButton btnSalvar;
+    private JButton btnSalvar, btnRemover; // Adicionar btnRemover
     private JTable tabelaProdutos;
     private DefaultTableModel modeloTabela;
 
@@ -61,6 +61,7 @@ public class TelaCadastroProduto extends JFrame {
         txtPreco = new JTextField();
         txtEstoque = new JTextField();
         btnSalvar = new JButton("Salvar");
+        btnRemover = new JButton("Remover"); // Novo botão
 
         // Adiciona os componentes ao painel
         painel.add(new JLabel("Nome:"));
@@ -71,7 +72,12 @@ public class TelaCadastroProduto extends JFrame {
         painel.add(txtPreco);
         painel.add(new JLabel("Estoque:"));
         painel.add(txtEstoque);
-        painel.add(btnSalvar);
+        
+        // Criar um painel para os botões
+        JPanel painelBotoes = new JPanel(new FlowLayout());
+        painelBotoes.add(btnSalvar);
+        painelBotoes.add(btnRemover);
+        painel.add(painelBotoes);
 
         // Configura o evento de clique do botão salvar
         btnSalvar.addActionListener(e -> {
@@ -79,6 +85,9 @@ public class TelaCadastroProduto extends JFrame {
             carregarProdutos();
             limparCampos();
         });
+
+        // Configura o evento de clique do botão remover
+        btnRemover.addActionListener(e -> removerProdutoSelecionado());
 
         return painel;
     }
@@ -135,6 +144,41 @@ public class TelaCadastroProduto extends JFrame {
             JOptionPane.showMessageDialog(this, "Produto cadastrado com sucesso!");
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Erro ao salvar produto: " + ex.getMessage());
+        }
+    }
+
+    /**
+     * Remove o produto selecionado na tabela
+     */
+    private void removerProdutoSelecionado() {
+        int linhaSelecionada = tabelaProdutos.getSelectedRow();
+        if (linhaSelecionada == -1) {
+            JOptionPane.showMessageDialog(this, "Por favor, selecione um produto para remover.");
+            return;
+        }
+
+        int confirmacao = JOptionPane.showConfirmDialog(this,
+            "Tem certeza que deseja remover este produto?",
+            "Confirmar Remoção",
+            JOptionPane.YES_NO_OPTION);
+
+        if (confirmacao == JOptionPane.YES_OPTION) {
+            try (Connection con = Conexao.getConexao()) {
+                int idProduto = (int) modeloTabela.getValueAt(linhaSelecionada, 0);
+                String sql = "DELETE FROM Produtos WHERE id = ?";
+                
+                PreparedStatement stmt = con.prepareStatement(sql);
+                stmt.setInt(1, idProduto);
+                stmt.executeUpdate();
+
+                JOptionPane.showMessageDialog(this, "Produto removido com sucesso!");
+                carregarProdutos(); // Atualiza a tabela
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this, 
+                    "Erro ao remover produto: " + ex.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 
